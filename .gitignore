@@ -6,3 +6,4 @@ target
 node_modules
 test-ledger
 .yarn
+!target/idl/sol_wrapping_contract.json

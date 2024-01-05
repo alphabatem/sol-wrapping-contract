@@ -1,0 +1,93 @@
+{
+  "version": "0.1.0",
+  "name": "sol_wrapping_contract",
+  "instructions": [
+    {
+      "name": "wrap",
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "wsolAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nativeMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "unwrap",
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "wsolAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nativeMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InsufficientBalance",
+      "msg": "Not enough SOL to wrap"
+    },
+    {
+      "code": 6001,
+      "name": "UnauthorizedAccess",
+      "msg": "Not authorized for this transaction"
+    },
+    {
+      "code": 6002,
+      "name": "UninitializedTokenAccount",
+      "msg": "Token Account does not exist"
+    }
+  ],
+  "metadata": {
+    "address": "DX6quq5ypkFrGviQuMTX6KMLiEGVjnWaEXiDsVpNRP3e"
+  }
+}

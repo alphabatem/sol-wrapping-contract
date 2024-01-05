@@ -27,15 +27,13 @@ describe("sol-wrapping-contract", () => {
 
   let owner = loadWalletKey("/Users/Temitope/.config/solana/id.json")
 
-  // let owner = anchor.web3.Keypair.generate();
-
 
   let amount = 1 * 1e9; /* Wrapped SOL's decimals is 9 */
 
-  it("Is converting sol!", async () => {
+  it("Is wrapping sol!", async () => {
     // Add your test here.
 
-    const recipient_ata = await getOrCreateAssociatedTokenAccount(
+    const wsol_ata = await getOrCreateAssociatedTokenAccount(
       connection, 
       owner,
       NATIVE_MINT,
@@ -46,13 +44,36 @@ describe("sol-wrapping-contract", () => {
       TOKEN_PROGRAM_ID
     );
 
-    const tx = await program.methods.convertSol(new anchor.BN(amount)).accounts({
+    const tx = await program.methods.wrap(new anchor.BN(amount)).accounts({
       owner: owner.publicKey,
-      wsolAccount: recipient_ata.address,
+      wsolAccount: wsol_ata.address,
       nativeMint: NATIVE_MINT,
       associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
       tokenProgram: TOKEN_PROGRAM_ID,
       systemProgram: SystemProgram.programId
+    }).rpc({skipPreflight: true});
+    console.log("Your transaction signature", tx);
+  });
+
+  it("Is unwrapping sol!", async () => {
+    // Add your test here.
+
+    const wsol_ata = await getOrCreateAssociatedTokenAccount(
+      connection, 
+      owner,
+      NATIVE_MINT,
+      owner.publicKey,
+      true,
+      null,
+      null,
+      TOKEN_PROGRAM_ID
+    );
+
+    const tx = await program.methods.unwrap().accounts({
+      owner: owner.publicKey,
+      wsolAccount: wsol_ata.address,
+      nativeMint: NATIVE_MINT,
+      tokenProgram: TOKEN_PROGRAM_ID,
     }).rpc({skipPreflight: true});
     console.log("Your transaction signature", tx);
   });
