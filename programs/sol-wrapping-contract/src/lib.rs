@@ -56,13 +56,13 @@ pub struct Unwrap<'info> {
 
     #[account(
         mut,
-        constraint = native_mint.key() == wsol_account.mint,
+        constraint = mint.key() == wsol_account.mint,
         constraint = owner.key() == wsol_account.owner,
     )]
     pub wsol_account: Box<InterfaceAccount<'info, TokenAccount>>, 
 
     #[account(mut)]
-    pub native_mint: Box<InterfaceAccount<'info, Mint>>,
+    pub mint: Box<InterfaceAccount<'info, Mint>>,
 
     /// CHECK: This is not dangerous because we don't read or write from this account
     pub token_program: Interface<'info, TokenInterface>,
@@ -127,7 +127,13 @@ pub fn unwrap_handler(
     let wsol_account_size = ctx.accounts.wsol_account.to_account_info().data_len();
 
     if wsol_account_size < 1 {
-        return err!(ErrorCode::UninitializedTokenAccount);
+        msg!("Account not initialized.");
+        return Ok(())
+    }
+
+    if ctx.accounts.wsol_account.amount > 0 {
+        msg!("Account not empty.");
+        return Ok(())
     }
 
     token::close_account(

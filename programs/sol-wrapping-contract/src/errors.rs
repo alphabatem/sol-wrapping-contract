@@ -6,6 +6,4 @@ pub enum ErrorCode {
     InsufficientBalance,
     #[msg("Not authorized for this transaction")]
     UnauthorizedAccess,
-    #[msg("Token Account does not exist")]
-    UninitializedTokenAccount,
 }

@@ -57,7 +57,7 @@
           "isSigner": false
         },
         {
-          "name": "nativeMint",
+          "name": "mint",
           "isMut": true,
           "isSigner": false
         },
@@ -80,11 +80,6 @@
       "code": 6001,
       "name": "UnauthorizedAccess",
       "msg": "Not authorized for this transaction"
-    },
-    {
-      "code": 6002,
-      "name": "UninitializedTokenAccount",
-      "msg": "Token Account does not exist"
     }
   ],
   "metadata": {
